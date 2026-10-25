@@ -1,4 +1,22 @@
-# Cloud EDR Deployment, Adversary Simulation & Detection Engineering
+# Enterprise SOC Analyst & Detection Engineering Portfolio
+
+**Author:** Osagie Henry Idehen  
+**Target Roles:** Tier 1 / Tier 2 SOC Analyst • Detection Engineer • Incident Responder  
+**Certifications:** CompTIA Security+ (ce) • AWS Certified Cloud Practitioner • Certified in Cybersecurity (CC)  
+**Core Frameworks:** MITRE ATT&CK (Enterprise) • NIST SP 800-61 Rev. 2 • Cyber Kill Chain  
+
+---
+
+## Portfolio Projects Index
+
+| Project | Domain | Primary Technologies | Key Threat / Technique | Documentation & Code |
+| :--- | :--- | :--- | :--- | :--- |
+| **Project 1** | **Cloud EDR & Detection Engineering** | LimaCharlie Cloud EDR, Sysmon, Windows 11 Enterprise | MITRE ATT&CK T1490 (Volume Shadow Deletion / Ransomware Prep) | [Jump to Project 1 Details](#project-1-cloud-edr-deployment-adversary-simulation--detection-engineering) |
+| **Project 2** | **Phishing Analysis & Incident Response** | RFC 822 MIME, PowerShell Forensic Engine, YARA, M365 Compliance, Entra ID | MITRE ATT&CK T1566.002, T1036.005, T1539 (M365 Credential Harvester) | [View Project 2 Full Lab Guide & Code](./Phishing-Lab/README.md) |
+
+---
+
+# Project 1: Cloud EDR Deployment, Adversary Simulation & Detection Engineering
 
 **Author:** Osagie Henry Idehen  
 **Target Role:** Tier 1 SOC Analyst / Detection Engineer / Incident Responder  

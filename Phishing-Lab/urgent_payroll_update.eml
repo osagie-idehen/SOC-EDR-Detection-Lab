@@ -1,0 +1,96 @@
+Delivered-To: victim-employee@globaltech-solutions.com
+Received: by 2002:a05:6e02:18c4:0:0:0:0 with SMTP id e4csp1092415ilr;
+        Sun, 25 Oct 2026 08:15:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF9q0X3k4hFqK/m1mD2v7eN4X0x8j7b4K2n9M=
+X-Received: by 2002:a2e:9c12:0:b0:2eb:d1e4:f321 with SMTP id w18mr2914838lje.42.1792916134120;
+        Sun, 25 Oct 2026 08:15:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792916134; cv=none;
+        d=google.com; s=arc-20160816;
+        b=J5kL...
+ARC-Authentication-Results: i=1; mx.google.com;
+       spf=fail (google.com: domain of admin@login-microsoft365-verify.com does not designate 185.220.101.5 as permitted sender) smtp.mailfrom=admin@login-microsoft365-verify.com;
+       dkim=neutral (no key for signature) header.i=@login-microsoft365-verify.com;
+       dmarc=fail (p=NONE sp=NONE dis=NONE) header.from=globaltech-solutions.com
+Return-Path: <bounce-daemon@mailserver-vps99.ru>
+Received: from mailserver-vps99.ru (vps-185-220-101-5.hostinger-vps.com. [185.220.101.5])
+        by mx.google.com with ESMTP id q12si2819481lja.104.2026.10.25.08.15.33
+        for <victim-employee@globaltech-solutions.com>;
+        Sun, 25 Oct 2026 08:15:34 -0700 (PDT)
+Received-SPF: fail (google.com: domain of admin@login-microsoft365-verify.com does not designate 185.220.101.5 as permitted sender) client-ip=185.220.101.5;
+Authentication-Results: mx.google.com;
+       spf=fail (google.com: domain of admin@login-microsoft365-verify.com does not designate 185.220.101.5 as permitted sender) smtp.mailfrom=admin@login-microsoft365-verify.com;
+       dkim=neutral (no key for signature) header.i=@login-microsoft365-verify.com;
+       dmarc=fail (p=NONE sp=NONE dis=NONE) header.from=globaltech-solutions.com
+From: "GlobalTech IT Helpdesk" <support@globaltech-solutions.com>
+Sender: "Security Operations Admin" <admin@login-microsoft365-verify.com>
+Reply-To: "IT Support Recovery" <ticket-response@secure-recovery-helpdesk.top>
+To: victim-employee@globaltech-solutions.com
+Subject: ACTION REQUIRED: Immediate Password Expiration Notice & Multi-Factor Sync
+Date: Sun, 25 Oct 2026 15:15:28 +0000
+Message-ID: <20261025151528.84719.support@login-microsoft365-verify.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="----=_NextPart_000_001B_01D9D99A.491A8020"
+X-Priority: 1 (Highest)
+X-Mailer: PHPMailer 6.5.0 (https://github.com/PHPMailer/PHPMailer)
+
+------=_NextPart_000_001B_01D9D99A.491A8020
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+
+GLOBALTECH SOLUTIONS - IT SUPPORT ADVISORY
+
+Dear Employee,
+
+Your Microsoft 365 enterprise corporate password expires in less than 24 hours. Failure to synchronize your multi-factor credentials will result in immediate suspension of corporate email, SharePoint, and remote VPN access.
+
+To prevent account interruption, you must synchronize your password immediately using our enterprise single sign-on portal:
+
+https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+
+Thank you,
+IT Infrastructure Support Team
+GlobalTech Solutions Inc.
+
+------=_NextPart_000_001B_01D9D99A.491A8020
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; color: #242424; background-color: #f5f5f5; padding: 20px; }
+.container { max-width: 600px; margin: 0 auto; background: #ffffff; border: 1px solid #e1e1e1; border-top: 4px solid #0078d4; border-radius: 4px; padding: 24px; }
+.header { font-size: 18px; font-weight: 600; color: #0078d4; margin-bottom: 16px; }
+.alert-box { background-color: #fdf3d8; border-left: 4px solid #d83b01; padding: 12px; margin-bottom: 20px; font-size: 14px; color: #323130; }
+.btn { display: inline-block; background-color: #0078d4; color: #ffffff !important; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: 600; margin: 20px 0; }
+.footer { font-size: 11px; color: #707070; margin-top: 24px; border-top: 1px solid #eeeeee; padding-top: 12px; }
+</style>
+</head>
+<body>
+<div class=3D"container">
+  <div class=3D"header">GlobalTech Solutions - IT Security Notification</div>
+  <div class=3D"alert-box">
+    <strong>URGENT:</strong> Your Microsoft 365 corporate credentials expire today. Immediate action is required to avoid service suspension.
+  </div>
+  <p>Dear Valued Employee,</p>
+  <p>Our identity access monitoring system has flagged your corporate workstation account for mandatory security protocol update and multi-factor re-authentication.</p>
+  <p>If you do not synchronize your credentials within <strong>24 hours</strong>, your access to corporate email, cloud drives, and internal systems will be temporarily locked for security compliance.</p>
+  
+  <p style=3D"text-align: center;">
+    <a href=3D"http://secure-login-microsoft365-auth.online/portal/login.php?user=3Dvictim-employee@globaltech-solutions.com&token=3D849a20fe98" class=3D"btn">Keep Same Password &amp; Synchronize Credentials</a>
+  </p>
+
+  <p style=3D"font-size: 12px; color: #605e5c;">
+    Direct Portal Link: <a href=3D"http://secure-login-microsoft365-auth.online/portal/login.php?user=3Dvictim-employee@globaltech-solutions.com&token=3D849a20fe98">https://login.microsoftonline.com/common/oauth2/v2.0/authorize</a>
+  </p>
+
+  <div class=3D"footer">
+    This is an automated administrative notification sent from GlobalTech Solutions IT Helpdesk.<br>
+    Please do not reply directly to this email. For internal support, contact IT Helpdesk Extension #402.
+  </div>
+</div>
+</body>
+</html>
+
+------=_NextPart_000_001B_01D9D99A.491A8020--

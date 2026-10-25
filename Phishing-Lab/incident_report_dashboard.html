@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOC Incident Triage Report: INC-20261025-002</title>
+<style>
+  :root {
+    --bg-primary: #0f172a;
+    --bg-card: #1e293b;
+    --border: #334155;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent-blue: #38bdf8;
+    --accent-red: #f87171;
+    --accent-yellow: #fbbf24;
+    --accent-green: #4ade80;
+    --danger-bg: rgba(239, 68, 68, 0.15);
+    --badge-bg: #334155;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  body { background-color: var(--bg-primary); color: var(--text-primary); padding: 24px; line-height: 1.5; font-size: 14px; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  
+  .header-card {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--accent-red);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .title-group h1 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+  .badge-danger { background: #dc2626; color: white; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; }
+  .badge-warning { background: #d97706; color: white; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+  .badge-success { background: #16a34a; color: white; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+  .subtitle { font-size: 13px; color: var(--text-secondary); }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .meta-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+  }
+  .meta-label { font-size: 11px; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.5px; margin-bottom: 4px; }
+  .meta-value { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent-blue);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  th { background-color: rgba(255,255,255,0.03); color: var(--text-secondary); font-weight: 600; text-transform: uppercase; font-size: 11px; }
+  td code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; color: var(--accent-blue); font-size: 12px; }
+
+  .deception-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    background: rgba(0,0,0,0.25);
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    margin-top: 12px;
+  }
+  .deception-col h4 { font-size: 12px; text-transform: uppercase; margin-bottom: 8px; color: var(--text-secondary); }
+  .deception-preview {
+    background: #ffffff;
+    color: #1a1a1a;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 13px;
+    border-left: 4px solid #0078d4;
+  }
+  .deception-analysis {
+    background: #111827;
+    border-radius: 4px;
+    padding: 12px;
+    font-family: monospace;
+    font-size: 12px;
+    color: var(--accent-red);
+  }
+
+  .checklist { list-style: none; }
+  .checklist li { margin-bottom: 8px; display: flex; align-items: baseline; gap: 8px; }
+  .checklist li span.check { color: var(--accent-green); font-weight: bold; }
+
+  @media (max-width: 768px) {
+    .deception-box { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header-card">
+    <div class="title-group">
+      <h1>
+        INC-20261025-002: M365 Credential Phish
+        <span class="badge-danger">High Severity</span>
+        <span class="badge-success">Contained</span>
+      </h1>
+      <div class="subtitle">GlobalTech Solutions Security Operations Center &bull; Triage certified by Lead Analyst Osagie Henry Idehen</div>
+    </div>
+    <div style="text-align: right;">
+      <div style="font-size: 12px; color: var(--text-secondary);">Detected: 2026-10-25 15:15:34 UTC</div>
+      <div style="font-size: 12px; color: var(--accent-green);">Closed: 2026-10-25 16:02:10 UTC</div>
+    </div>
+  </div>
+
+  <!-- METRIC SUMMARY -->
+  <div class="meta-grid">
+    <div class="meta-card">
+      <div class="meta-label">Attack Technique</div>
+      <div class="meta-value">MITRE T1566.002 (Spearphish Link)</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-label">Target Account</div>
+      <div class="meta-value">victim-employee@globaltech-solutions.com</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-label">Adversary Relay IP</div>
+      <div class="meta-value">185[.]220[.]101[.]5 (Hostinger VPS)</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-label">DMARC Policy Evaluated</div>
+      <div class="meta-value" style="color: var(--accent-yellow);">FAIL (Allowed via p=none)</div>
+    </div>
+  </div>
+
+  <!-- AUTHENTICATION FORENSICS -->
+  <div class="card">
+    <div class="card-title">
+      <span>1. Transport & Email Authentication Audit</span>
+      <span style="font-size: 12px; color: var(--text-secondary);">RFC 822 Header Verification</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Protocol / Header</th>
+          <th>Observed Evaluation</th>
+          <th>Status</th>
+          <th>Analyst Diagnostic</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>SPF (Sender Policy)</strong></td>
+          <td><code>185.220.101.5</code> not in SPF record</td>
+          <td><span class="badge-danger">FAIL</span></td>
+          <td>Relay server IP is unauthorized to transmit on behalf of <code>login-microsoft365-verify.com</code>.</td>
+        </tr>
+        <tr>
+          <td><strong>DKIM (Signature)</strong></td>
+          <td>No cryptographic public key</td>
+          <td><span class="badge-warning">NEUTRAL</span></td>
+          <td>Message lacks cryptographic domain signature; origin authenticity unverified.</td>
+        </tr>
+        <tr>
+          <td><strong>DMARC Alignment</strong></td>
+          <td><code>From</code> mismatch with envelope sender</td>
+          <td><span class="badge-danger">FAIL</span></td>
+          <td>Organization running policy <code>p=none</code> permitted delivery directly into recipient inbox.</td>
+        </tr>
+        <tr>
+          <td><strong>Display Spoofing</strong></td>
+          <td><code>support@globaltech-solutions.com</code></td>
+          <td><span class="badge-danger">SPOOFED</span></td>
+          <td>Visible sender impersonates internal IT; envelope sender points to external adversary lookalike.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PAYLOAD DECEPTION AUDIT -->
+  <div class="card">
+    <div class="card-title">
+      <span>2. Hyperlink Deception & Credential Harvester Analysis</span>
+      <span style="font-size: 12px; color: var(--text-secondary);">CWE-451 Spoofed Anchor</span>
+    </div>
+    <p style="color: var(--text-secondary); margin-bottom: 8px;">
+      The adversary engineered a visual lure presenting a legitimate Microsoft Online identity link, masking an unencrypted harvesting endpoint:
+    </p>
+
+    <div class="deception-box">
+      <div class="deception-col">
+        <h4>Victim View (Rendered HTML)</h4>
+        <div class="deception-preview">
+          <p style="font-weight: 600; color: #0078d4; margin-bottom: 4px;">GlobalTech Solutions - IT Security Notification</p>
+          <p style="font-size: 11px; margin-bottom: 8px; color: #666;">Your Microsoft 365 credentials expire today. Click below to synchronize:</p>
+          <div style="background:#0078d4; color:#fff; padding:6px 12px; border-radius:4px; text-align:center; font-weight:600; font-size:12px;">
+            Keep Same Password &amp; Synchronize Credentials
+          </div>
+          <p style="font-size: 10px; color: #666; margin-top: 8px;">
+            Visible link text: <span style="color:#0078d4; text-decoration:underline;">https://login.microsoftonline.com/common/oauth2/v2.0/authorize</span>
+          </p>
+        </div>
+      </div>
+      <div class="deception-col">
+        <h4>Forensic Reality (Actual Destination)</h4>
+        <div class="deception-analysis">
+          <strong>TARGET URL:</strong><br>
+          hxxp://secure-login-microsoft365-auth[.]online/portal/login[.]php?user=victim-employee@globaltech-solutions[.]com&amp;token=849a20fe98<br><br>
+          <strong>THREAT VECTORS:</strong><br>
+          • Insecure HTTP protocol (Cleartext capture)<br>
+          • URL Parameter user tracking pre-fill<br>
+          • Hostinger Seychelles VPS relay backend<br>
+          • Campaign correlation token
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEFANGED IOCS -->
+  <div class="card">
+    <div class="card-title">
+      <span>3. Defanged Indicators of Compromise (IoCs)</span>
+      <span style="font-size: 12px; color: var(--text-secondary);">Exported to SIEM / Firewall</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Indicator Type</th>
+          <th>Defanged Value</th>
+          <th>Action Taken</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Artifact SHA-256</strong></td>
+          <td><code>4A8BE14E6BCCE9D3BFB709BC012C6232A5992BEE601CFF7A2616F71EA1016EC8</code></td>
+          <td>Logged to SOC Threat Intel DB</td>
+        </tr>
+        <tr>
+          <td><strong>Relay IP</strong></td>
+          <td><code>185[.]220[.]101[.]5</code></td>
+          <td>Dropped at Perimeter Edge Firewall</td>
+        </tr>
+        <tr>
+          <td><strong>Credential Harvester</strong></td>
+          <td><code>hxxp://secure-login-microsoft365-auth[.]online/portal/login[.]php</code></td>
+          <td>Internal DNS Sinkhole + Web Proxy Block</td>
+        </tr>
+        <tr>
+          <td><strong>Lookalike Sender Domain</strong></td>
+          <td><code>login-microsoft365-verify[.]com</code></td>
+          <td>Quarantined via Exchange Mail Flow Rule</td>
+        </tr>
+        <tr>
+          <td><strong>Adversary Reply-To Domain</strong></td>
+          <td><code>secure-recovery-helpdesk[.]top</code></td>
+          <td>Inbound Transport Drop</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CONTAINMENT & PLAYBOOK -->
+  <div class="card">
+    <div class="card-title">
+      <span>4. NIST SP 800-61 Incident Handling Execution</span>
+      <span style="font-size: 12px; color: var(--accent-green);">100% Actions Completed</span>
+    </div>
+    <ul class="checklist">
+      <li><span class="check">&#10004;</span> <strong>Tenant Search &amp; Purge:</strong> Executed <code>New-ComplianceSearchAction -Purge -PurgeType HardDelete</code> across all Microsoft 365 mailboxes.</li>
+      <li><span class="check">&#10004;</span> <strong>User Identity Isolation:</strong> Executed <code>Revoke-MgUserSignSession</code> on <code>victim-employee@globaltech-solutions.com</code> to terminate active sessions.</li>
+      <li><span class="check">&#10004;</span> <strong>Enforced Credential Reset:</strong> Force-invalidated password and scheduled mandatory MFA re-authentication.</li>
+      <li><span class="check">&#10004;</span> <strong>Perimeter Hardening:</strong> Added <code>185[.]220[.]101[.]5</code> to border firewall drop list and sinkholed lookalike domains.</li>
+      <li><span class="check">&#10004;</span> <strong>Detection Rule Deployed:</strong> Implemented YARA rule <code>Detect_M365_Credential_Phish.yar</code> in inbound mail gateway inspection.</li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>
