@@ -13,6 +13,7 @@
 | :--- | :--- | :--- | :--- | :--- |
 | **Project 1** | **Cloud EDR & Detection Engineering** | LimaCharlie Cloud EDR, Sysmon, Windows 11 Enterprise | MITRE ATT&CK T1490 (Volume Shadow Deletion / Ransomware Prep) | [Jump to Project 1 Details](#project-1-cloud-edr-deployment-adversary-simulation--detection-engineering) |
 | **Project 2** | **Phishing Analysis & Incident Response** | RFC 822 MIME, PowerShell Forensic Engine, YARA, M365 Compliance, Entra ID | MITRE ATT&CK T1566.002, T1036.005, T1539 (M365 Credential Harvester) | [View Project 2 Full Lab Guide & Code](./Phishing-Lab/README.md) |
+| **Project 3** | **SIEM Threat Hunting & SOC Alerting** | Splunk Enterprise, Windows Event Logs, Sysmon, PowerShell Engine | MITRE ATT&CK T1110, T1078, T1059, T1098, T1070 (Domain Compromise) | [View Project 3 Full Lab Guide & Code](./Splunk-Threat-Hunting-Lab/README.md) |
 
 ---
 

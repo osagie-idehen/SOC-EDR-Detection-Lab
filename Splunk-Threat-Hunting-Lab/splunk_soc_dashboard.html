@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Splunk Enterprise SOC Threat Hunting &amp; Detection Dashboard</title>
+<style>
+  :root {
+    --splunk-bg: #11161d;
+    --splunk-card: #182230;
+    --splunk-border: #2b3a4a;
+    --splunk-text: #e2e8f0;
+    --splunk-muted: #94a3b8;
+    --splunk-green: #10b981;
+    --splunk-yellow: #f59e0b;
+    --splunk-red: #ef4444;
+    --splunk-blue: #0284c7;
+    --splunk-accent: #38bdf8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace, sans-serif; }
+  body { background-color: var(--splunk-bg); color: var(--splunk-text); padding: 20px; font-size: 13px; line-height: 1.45; }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  /* NAV / HEADER */
+  .splunk-header {
+    background: #0b1118;
+    border: 1px solid var(--splunk-border);
+    border-top: 4px solid var(--splunk-blue);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .splunk-brand { display: flex; align-items: center; gap: 12px; }
+  .splunk-logo { background: #ea580c; color: white; font-weight: 900; font-size: 13px; padding: 4px 8px; border-radius: 3px; letter-spacing: 1px; }
+  .splunk-title h1 { font-size: 18px; font-weight: 700; color: #fff; }
+  .splunk-title p { font-size: 12px; color: var(--splunk-muted); }
+  .splunk-status { text-align: right; font-size: 12px; }
+  .live-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(16,185,129,0.15); color: var(--splunk-green); padding: 3px 8px; border-radius: 12px; font-weight: 600; font-size: 11px; }
+  .pulse { width: 8px; height: 8px; background: var(--splunk-green); border-radius: 50%; box-shadow: 0 0 8px var(--splunk-green); }
+
+  /* METRICS ROW */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .metric-card {
+    background: var(--splunk-card);
+    border: 1px solid var(--splunk-border);
+    border-radius: 6px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .metric-card.red { border-left: 4px solid var(--splunk-red); }
+  .metric-card.yellow { border-left: 4px solid var(--splunk-yellow); }
+  .metric-card.green { border-left: 4px solid var(--splunk-green); }
+  .metric-title { font-size: 11px; text-transform: uppercase; color: var(--splunk-muted); letter-spacing: 0.5px; margin-bottom: 6px; }
+  .metric-value { font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 4px; display: flex; align-items: baseline; gap: 8px; }
+  .metric-sub { font-size: 11px; color: var(--splunk-muted); }
+
+  /* PANELS */
+  .card-row { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 20px; }
+  .card {
+    background: var(--splunk-card);
+    border: 1px solid var(--splunk-border);
+    border-radius: 6px;
+    padding: 16px;
+  }
+  .card-header {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--splunk-accent);
+    border-bottom: 1px solid var(--splunk-border);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .card-tag { font-size: 11px; color: var(--splunk-muted); font-family: monospace; }
+
+  /* VISUAL TIMELINE */
+  .timeline-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+  .timeline-label { width: 140px; color: var(--splunk-muted); }
+  .bar-container { flex: 1; background: rgba(255,255,255,0.05); height: 20px; border-radius: 4px; overflow: hidden; display: flex; }
+  .bar-fill { height: 100%; display: flex; align-items: center; padding-left: 8px; font-weight: 700; font-size: 11px; color: white; }
+  .bar-red { background: linear-gradient(90deg, #ef4444, #dc2626); }
+  .bar-yellow { background: linear-gradient(90deg, #f59e0b, #d97706); }
+  .bar-blue { background: linear-gradient(90deg, #0284c7, #0369a1); }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--splunk-border); }
+  th { background-color: rgba(255,255,255,0.02); color: var(--splunk-muted); font-weight: 600; text-transform: uppercase; font-size: 10.5px; }
+  td code { font-family: ui-monospace, Menlo, Monaco, Consolas, monospace; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; color: var(--splunk-accent); font-size: 11px; }
+  .badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-weight: 700; font-size: 10px; text-transform: uppercase; }
+  .badge-crit { background: rgba(239,68,68,0.2); color: #f87171; border: 1px solid #ef4444; }
+  .badge-high { background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid #f59e0b; }
+  .badge-med { background: rgba(2,132,199,0.2); color: #38bdf8; border: 1px solid #0284c7; }
+
+  @media (max-width: 868px) {
+    .card-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="splunk-header">
+    <div class="splunk-brand">
+      <div class="splunk-logo">&gt;splunk&gt;</div>
+      <div class="splunk-title">
+        <h1>Enterprise SOC Threat Hunting &amp; Alerting Console</h1>
+        <p>Telemetry Source: Domain Controller (DC-CORP-01) &bull; Lead Analyst: Osagie Henry Idehen</p>
+      </div>
+    </div>
+    <div class="splunk-status">
+      <div class="live-pill"><span class="pulse"></span> LIVE INDEXER ACTIVE</div>
+      <div style="color: var(--splunk-muted); margin-top: 4px;">Incident Ref: INC-20261025-003</div>
+    </div>
+  </div>
+
+  <!-- SINGLE VALUE METRIC CARDS -->
+  <div class="metrics-grid">
+    <div class="metric-card yellow">
+      <div class="metric-title">Failed Logons (Event 4625)</div>
+      <div class="metric-value">8 <span style="font-size:12px; color:var(--splunk-yellow); font-weight:normal;">Attempts / 60s</span></div>
+      <div class="metric-sub">MITRE T1110 (Brute Force / Password Spray)</div>
+    </div>
+
+    <div class="metric-card red">
+      <div class="metric-title">Breached Account (Event 4624)</div>
+      <div class="metric-value">1 <span style="font-size:12px; color:var(--splunk-red); font-weight:normal;">CRITICAL</span></div>
+      <div class="metric-sub">Compromised: <code>Administrator</code> via 185.220.101.5</div>
+    </div>
+
+    <div class="metric-card red">
+      <div class="metric-title">Suspicious LOLBAS &amp; Shells</div>
+      <div class="metric-value">2 <span style="font-size:12px; color:var(--splunk-red); font-weight:normal;">Sysmon EID 1</span></div>
+      <div class="metric-sub">Obfuscated PowerShell &amp; Certutil download</div>
+    </div>
+
+    <div class="metric-card red">
+      <div class="metric-title">Privilege Escalation (Event 4728)</div>
+      <div class="metric-value">1 <span style="font-size:12px; color:var(--splunk-red); font-weight:normal;">Domain Admin</span></div>
+      <div class="metric-sub">Rogue Backdoor: <code>svc-backup-admin</code></div>
+    </div>
+  </div>
+
+  <!-- VISUAL CHARTS & ATTACK TIMELINE -->
+  <div class="card-row">
+    <div class="card">
+      <div class="card-header">
+        <span>Attack Progression &amp; Telemetry Breakdown</span>
+        <span class="card-tag">index=windows_security OR index=sysmon</span>
+      </div>
+
+      <div class="timeline-bar">
+        <div class="timeline-label">14:10 - Brute Force (4625)</div>
+        <div class="bar-container">
+          <div class="bar-fill bar-yellow" style="width: 85%;">8 Failed Attempts (185.220.101.5)</div>
+        </div>
+      </div>
+
+      <div class="timeline-bar">
+        <div class="timeline-label">14:11 - Breach Logon (4624)</div>
+        <div class="bar-container">
+          <div class="bar-fill bar-red" style="width: 100%;">Type 3 Network Access (Admin Compromised)</div>
+        </div>
+      </div>
+
+      <div class="timeline-bar">
+        <div class="timeline-label">14:11 - Encoded Shell (Sysmon 1)</div>
+        <div class="bar-container">
+          <div class="bar-fill bar-red" style="width: 70%;">powershell.exe -enc JABj... (C2 Callback)</div>
+        </div>
+      </div>
+
+      <div class="timeline-bar">
+        <div class="timeline-label">14:12 - Persistence (4720/4728)</div>
+        <div class="bar-container">
+          <div class="bar-fill bar-red" style="width: 90%;">Created svc-backup-admin -&gt; Domain Admins</div>
+        </div>
+      </div>
+
+      <div class="timeline-bar">
+        <div class="timeline-label">14:12 - LOLBAS Ingress (Certutil)</div>
+        <div class="bar-container">
+          <div class="bar-fill bar-yellow" style="width: 60%;">certutil.exe -urlcache -split -f payload.exe</div>
+        </div>
+      </div>
+
+      <div class="timeline-bar">
+        <div class="timeline-label">14:13 - Anti-Forensics (1102)</div>
+        <div class="bar-container">
+          <div class="bar-fill bar-red" style="width: 100%;">Security Event Log Cleared</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span>Attacker Infrastructure</span>
+        <span class="card-tag">Threat Intel Match</span>
+      </div>
+      <div style="font-size: 12px; margin-bottom: 8px;">
+        <strong>Adversary IP:</strong> <code>185[.]220[.]101[.]5</code><br>
+        <strong>Autonomous System:</strong> AS47583 (Hostinger)<br>
+        <strong>Geo Location:</strong> Seychelles Datacenter<br>
+        <strong>Target Host:</strong> <code>DC-CORP-01.globaltech.corp</code><br>
+        <strong>Compromised Creds:</strong> <code>GLOBALTECH\Administrator</code><br>
+        <strong>Rogue Backdoor:</strong> <code>svc-backup-admin</code><br>
+        <strong>C2 Protocol:</strong> HTTPS / TCP Port 443
+      </div>
+      <div style="margin-top: 12px; padding: 10px; background: rgba(239,68,68,0.1); border-left: 3px solid var(--splunk-red); border-radius: 4px; font-size: 11px;">
+        <strong>INCIDENT VERDICT:</strong> True Positive Multi-Stage Domain Compromise. Immediate Host Isolation and Kerberos TGT Ticket Invalidation required.
+      </div>
+    </div>
+  </div>
+
+  <!-- REAL TIME DETECTIONS QUEUE -->
+  <div class="card">
+    <div class="card-header">
+      <span>Splunk Real-Time Correlation Alerts Queue</span>
+      <span class="card-tag">savedsearches.conf &bull; Earliest: -1h</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>Severity</th>
+          <th>Alert Description</th>
+          <th>Target Host</th>
+          <th>Actor / User</th>
+          <th>MITRE ATT&amp;CK</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2026-10-25 14:10:52</td>
+          <td><span class="badge badge-high">High</span></td>
+          <td>High-Frequency Logon Failures (Brute Force)</td>
+          <td><code>DC-CORP-01</code></td>
+          <td><code>Administrator</code></td>
+          <td>T1110.001</td>
+        </tr>
+        <tr>
+          <td>2026-10-25 14:11:05</td>
+          <td><span class="badge badge-crit">Critical</span></td>
+          <td>Compromised Account Success Post-Brute Force</td>
+          <td><code>DC-CORP-01</code></td>
+          <td><code>Administrator</code></td>
+          <td>T1078</td>
+        </tr>
+        <tr>
+          <td>2026-10-25 14:11:30</td>
+          <td><span class="badge badge-crit">Critical</span></td>
+          <td>Obfuscated Encoded PowerShell Reverse Shell</td>
+          <td><code>DC-CORP-01</code></td>
+          <td><code>Administrator</code></td>
+          <td>T1059.001</td>
+        </tr>
+        <tr>
+          <td>2026-10-25 14:12:15</td>
+          <td><span class="badge badge-crit">Critical</span></td>
+          <td>Unauthorized Member Added to Domain Admins</td>
+          <td><code>DC-CORP-01</code></td>
+          <td><code>svc-backup-admin</code></td>
+          <td>T1098</td>
+        </tr>
+        <tr>
+          <td>2026-10-25 14:12:45</td>
+          <td><span class="badge badge-high">High</span></td>
+          <td>LOLBAS Abuse: Certutil Remote Payload Download</td>
+          <td><code>DC-CORP-01</code></td>
+          <td><code>Administrator</code></td>
+          <td>T1105</td>
+        </tr>
+        <tr>
+          <td>2026-10-25 14:13:20</td>
+          <td><span class="badge badge-crit">Critical</span></td>
+          <td>Defense Evasion: Security Event Log Cleared</td>
+          <td><code>DC-CORP-01</code></td>
+          <td><code>svc-backup-admin</code></td>
+          <td>T1070.001</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<dashboard theme="dark" version="1.1">
+  <label>SOC Enterprise Threat Hunting &amp; Intrusion Triage Dashboard</label>
+  <description>Live Security Operations Center telemetry monitoring Windows Security Event Logs and Sysmon process activity (Author: Osagie Henry Idehen)</description>
+  
+  <row>
+    <panel>
+      <single>
+        <title>Total Failed Logons (Event 4625)</title>
+        <search>
+          <query>index=windows_security EventCode=4625 | stats count</query>
+          <earliest>-24h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="rangeColors">["0x53a051","0xf8be34","0xdc4e41"]</option>
+        <option name="rangeValues">[0,5]</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Breached Logons (Success Post-Failure)</title>
+        <search>
+          <query>index=windows_security EventCode=4624 src_ip="185.220.101.5" | stats count</query>
+          <earliest>-24h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="rangeColors">["0x53a051","0xdc4e41"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Suspicious LOLBAS &amp; PowerShell Executions</title>
+        <search>
+          <query>index=sysmon EventCode=1 (CommandLine="*-enc*" OR CommandLine="*certutil*") | stats count</query>
+          <earliest>-24h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="rangeColors">["0x53a051","0xf8be34","0xdc4e41"]</option>
+        <option name="rangeValues">[0,1]</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Rogue Admin Accounts Created</title>
+        <search>
+          <query>index=windows_security (EventCode=4720 OR EventCode=4728) | stats count</query>
+          <earliest>-24h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="rangeColors">["0x53a051","0xdc4e41"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <chart>
+        <title>Authentication Failures Over Time by Source IP</title>
+        <search>
+          <query>index=windows_security EventCode=4625 | timechart span=1m count by src_ip</query>
+          <earliest>-1h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.stackMode">stacked</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Targeted User Account Distribution</title>
+        <search>
+          <query>index=windows_security EventCode=4625 | stats count by user</query>
+          <earliest>-1h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+      </chart>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <table>
+        <title>Real-Time High-Severity Detections Queue</title>
+        <search>
+          <query>index=windows_security OR index=sysmon 
+| eval alert_type=case(
+    EventCode==4625, "Brute Force / Password Guessing",
+    EventCode==4624 AND src_ip=="185.220.101.5", "Breach: Compromised Account Remote Access",
+    EventCode==1 AND match(CommandLine, "(?i)-enc"), "Adversary T1059: Obfuscated PowerShell Shell",
+    EventCode==1 AND match(CommandLine, "(?i)certutil"), "LOLBAS T1105: Remote Payload Ingress",
+    EventCode==4728, "Privilege Escalation T1098: Domain Admins Membership Assigned",
+    EventCode==1102, "Anti-Forensics T1070: Security Event Log Cleared",
+    1==1, "Standard Audit Telemetry"
+)
+| where alert_type!="Standard Audit Telemetry"
+| table _time, computer_name, user, alert_type, src_ip, CommandLine</query>
+          <earliest>-24h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">10</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>
