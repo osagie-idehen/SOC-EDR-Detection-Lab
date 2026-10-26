@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Osagie Henry Idehen | Cybersecurity Analyst &amp; Detection Engineer</title>
+<meta name="description" content="Portfolio of Osagie Henry Idehen - CompTIA Security+ certified SOC Analyst & Detection Engineer specializing in Cloud EDR, SIEM Threat Hunting, and Incident Response.">
+<style>
+  :root {
+    --bg-main: #0a0f18;
+    --bg-card: #111a28;
+    --bg-card-hover: #162235;
+    --border: #1f2f45;
+    --border-light: #2d4363;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --accent-blue: #38bdf8;
+    --accent-cyan: #06b6d4;
+    --accent-green: #10b981;
+    --accent-purple: #a855f7;
+    --accent-red: #ef4444;
+    --accent-orange: #f59e0b;
+    --gradient-hero: linear-gradient(135deg, #0a0f18 0%, #0f1c2e 50%, #0d253a 100%);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    font-size: 15px;
+    overflow-x: hidden;
+  }
+
+  a { color: var(--accent-blue); text-decoration: none; transition: all 0.2s ease; }
+  a:hover { color: #7dd3fc; }
+
+  /* CONTAINER */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* HEADER & NAVIGATION */
+  header {
+    background: rgba(10, 15, 24, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  .nav-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    font-size: 18px;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+  .brand-badge {
+    background: linear-gradient(135deg, #0284c7, #06b6d4);
+    color: #fff;
+    padding: 4px 9px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 900;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .nav-links a:hover { color: #fff; }
+  .btn-nav {
+    background: #0284c7;
+    color: #fff !important;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .btn-nav:hover { background: #0369a1; transform: translateY(-1px); }
+
+  /* HERO SECTION */
+  .hero {
+    background: var(--gradient-hero);
+    border-bottom: 1px solid var(--border);
+    padding: 80px 0 60px;
+    position: relative;
+  }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--accent-green);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent-green);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-green);
+  }
+  .hero h1 {
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: #fff;
+    max-width: 900px;
+  }
+  .hero h1 span.highlight {
+    background: linear-gradient(90deg, #38bdf8, #34d399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-secondary);
+    max-width: 780px;
+    margin-bottom: 30px;
+    line-height: 1.6;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #0284c7, #02659c);
+    color: #fff !important;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(2, 132, 199, 0.5); }
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-light);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-2px); }
+
+  /* METRIC STATS ROW */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 10px;
+  }
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .stat-num { font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 2px; }
+  .stat-label { font-size: 13px; color: var(--text-secondary); }
+
+  /* SECTION STYLES */
+  section { padding: 70px 0; border-bottom: 1px solid var(--border); }
+  .section-tag {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--accent-blue);
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    display: inline-block;
+  }
+  .section-title {
+    font-size: 30px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  .section-desc {
+    color: var(--text-secondary);
+    max-width: 650px;
+    margin-bottom: 40px;
+    font-size: 16px;
+  }
+
+  /* PROJECT SHOWCASE CARDS */
+  .projects-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+  .project-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    transition: all 0.25s ease;
+  }
+  .project-card:hover {
+    border-color: var(--border-light);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 32px rgba(0,0,0,0.4);
+  }
+  .project-content {
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .project-badge-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .pill {
+    padding: 3px 9px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .pill-red { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+  .pill-blue { background: rgba(2, 132, 199, 0.15); color: #38bdf8; border: 1px solid rgba(2, 132, 199, 0.3); }
+  .pill-green { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+  .pill-orange { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+
+  .project-title { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 12px; line-height: 1.3; }
+  .project-summary { color: var(--text-secondary); font-size: 14px; margin-bottom: 18px; line-height: 1.6; }
+  .project-bullets { list-style: none; margin-bottom: 24px; }
+  .project-bullets li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    color: var(--text-primary);
+  }
+  .project-bullets li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: var(--accent-blue);
+    font-weight: bold;
+  }
+  .project-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: auto;
+  }
+  .btn-sm-primary {
+    background: #0284c7;
+    color: white !important;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .btn-sm-primary:hover { background: #0369a1; }
+  .btn-sm-outline {
+    background: transparent;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-light);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .btn-sm-outline:hover { background: rgba(255,255,255,0.05); }
+
+  .project-visual {
+    background: #0d1522;
+    border-left: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow: hidden;
+  }
+  .project-visual img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease;
+  }
+  .project-visual:hover img { transform: scale(1.02); }
+
+  /* SKILLS GRID */
+  .skills-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .skill-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .skill-icon { font-size: 24px; margin-bottom: 12px; display: inline-block; }
+  .skill-name { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .skill-items { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; }
+
+  /* CERTS & EXPERIENCE SECTION */
+  .resume-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .resume-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px;
+  }
+  .resume-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent-blue);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+    margin-bottom: 18px;
+  }
+  .timeline-item {
+    margin-bottom: 18px;
+    position: relative;
+    padding-left: 18px;
+    border-left: 2px solid var(--border-light);
+  }
+  .timeline-item:last-child { margin-bottom: 0; }
+  .timeline-title { font-weight: 700; color: #fff; font-size: 14.5px; }
+  .timeline-sub { font-size: 13px; color: var(--accent-cyan); margin-bottom: 4px; }
+  .timeline-desc { font-size: 13px; color: var(--text-secondary); }
+
+  /* FOOTER */
+  footer {
+    background: #080c14;
+    padding: 50px 0 30px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .footer-copy { color: var(--text-muted); font-size: 13px; }
+
+  @media (max-width: 900px) {
+    .project-card { grid-template-columns: 1fr; }
+    .project-visual { border-left: none; border-top: 1px solid var(--border); }
+    .hero h1 { font-size: 32px; }
+    .resume-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <header>
+    <div class="container nav-wrap">
+      <div class="brand">
+        <span class="brand-badge">OHI</span>
+        <span>Osagie Henry Idehen</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#projects">Flagship Labs</a></li>
+        <li><a href="#skills">Core Competencies</a></li>
+        <li><a href="#experience">Experience &amp; Certs</a></li>
+        <li><a href="https://github.com/osagie-idehen/SOC-EDR-Detection-Lab" target="_blank">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/henryosagieidehen" target="_blank">LinkedIn</a></li>
+        <li><a href="Osagie_Idehen_Cybersecurity_Resume.pdf" target="_blank" class="btn-nav">Download CV (PDF)</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <div class="hero">
+    <div class="container">
+      <div class="status-pill">
+        <span class="pulse-dot"></span>
+        Available for 24/7 Tier 1/2 SOC Analyst &bull; Remote &bull; Relocation
+      </div>
+      <h1>
+        Defending Enterprise Infrastructure Through <span class="highlight">Detection Engineering &amp; Threat Hunting</span>
+      </h1>
+      <p class="hero-sub">
+        <strong>CompTIA Security+ certified Cybersecurity Analyst</strong> with 11 years of IT systems background and hands-on Security Operations Center (SOC) expertise across Cloud EDR (LimaCharlie), SIEM Log Telemetry (Splunk), and Email Threat Forensics.
+      </p>
+
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary">Explore Hands-On SOC Labs &rarr;</a>
+        <a href="Osagie_Idehen_Cybersecurity_Resume.pdf" target="_blank" class="btn-secondary">Download Resume (PDF)</a>
+        <a href="https://github.com/osagie-idehen/SOC-EDR-Detection-Lab" target="_blank" class="btn-secondary">View GitHub Code</a>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num">3 Production Labs</div>
+          <div class="stat-label">EDR, Phishing Triage, SIEM Hunting</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">CompTIA Security+</div>
+          <div class="stat-label">Certified (ce) &bull; Valid through 2028</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">MITRE ATT&amp;CK</div>
+          <div class="stat-label">T1490, T1566, T1110, T1059, T1098</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">100% Contained</div>
+          <div class="stat-label">Formal Incident Triage Playbooks</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLAGSHIP PROJECTS SECTION -->
+  <section id="projects">
+    <div class="container">
+      <span class="section-tag">Hands-On Proof of Competence</span>
+      <h2 class="section-title">Flagship SOC Detection &amp; Response Projects</h2>
+      <p class="section-desc">
+        Each project simulates real-world adversary behavior against hardened environments, coupled with custom detection engineering, automated forensic scripts, and formal incident triage reports.
+      </p>
+
+      <div class="projects-stack">
+
+        <!-- PROJECT 1: EDR -->
+        <div class="project-card">
+          <div class="project-content">
+            <div>
+              <div class="project-badge-row">
+                <span class="pill pill-blue">Cloud EDR</span>
+                <span class="pill pill-orange">MITRE ATT&amp;CK T1490</span>
+                <span class="pill pill-green">Detection Engineering</span>
+              </div>
+              <h3 class="project-title">Cloud EDR Deployment, Adversary Emulation &amp; Detection Engineering</h3>
+              <p class="project-summary">
+                Architected an enterprise endpoint detection pipeline utilizing Windows 11, Microsoft Sysmon (SwiftOnSecurity modular kernel logging), and LimaCharlie Cloud EDR. Emulated pre-ransomware volume shadow copy destruction via Living-off-the-Land Binaries (LOLBAS).
+              </p>
+              <ul class="project-bullets">
+                <li>Deployed Sysmon and LimaCharlie sensor with custom Windows Event Log artifact collector rules.</li>
+                <li>Simulated MITRE ATT&amp;CK T1490 attack string: <code>vssadmin.exe delete shadows /all /quiet</code>.</li>
+                <li>Authored and deployed custom YAML Detection &amp; Response (D&amp;R) rules to trigger immediate alerts upon volume shadow manipulation.</li>
+                <li>Authored formal SOC incident triage report (INC-20261023-001) detailing process trees and host isolation.</li>
+              </ul>
+            </div>
+            <div class="project-actions">
+              <a href="https://github.com/osagie-idehen/SOC-EDR-Detection-Lab" target="_blank" class="btn-sm-primary">View GitHub Repository</a>
+              <a href="README.md" target="_blank" class="btn-sm-outline">Read Full Technical Report</a>
+            </div>
+          </div>
+          <div class="project-visual">
+            <img src="detection_alert.png" alt="LimaCharlie EDR Detection Alert">
+          </div>
+        </div>
+
+        <!-- PROJECT 2: PHISHING LAB -->
+        <div class="project-card">
+          <div class="project-content">
+            <div>
+              <div class="project-badge-row">
+                <span class="pill pill-red">Incident Response</span>
+                <span class="pill pill-blue">RFC 822 Email Forensics</span>
+                <span class="pill pill-orange">MITRE T1566 / T1539</span>
+                <span class="pill pill-green">YARA Rule</span>
+              </div>
+              <h3 class="project-title">Phishing Analysis, Threat Intelligence &amp; Incident Triage Lab</h3>
+              <p class="project-summary">
+                Conducted an in-depth forensic investigation of an active credential harvesting campaign impersonating Microsoft 365 IT Helpdesk. Unfolded RFC 822 headers, evaluated SPF/DKIM/DMARC alignment failure, and uncovered deceptive anchor text spoofing.
+              </p>
+              <ul class="project-bullets">
+                <li>Traced unauthorized Russian VPS relay MTA hops (<code>185[.]220[.]101[.]5</code>) and lookalike domains.</li>
+                <li>Identified root cause: organizational DMARC policy in <code>p=none</code> monitoring allowed delivery into inbox.</li>
+                <li>Engineered automated PowerShell triage script (<code>analyze_phish.ps1</code>) to extract and defang URLs and compute SHA-256 hashes.</li>
+                <li>Authored custom YARA detection rule (<code>Detect_M365_Credential_Phish.yar</code>) and automated M365 compliance search-and-purge commands.</li>
+              </ul>
+            </div>
+            <div class="project-actions">
+              <a href="Phishing-Lab/incident_report_dashboard.html" target="_blank" class="btn-sm-primary">Launch Live SOC Dashboard &rarr;</a>
+              <a href="https://github.com/osagie-idehen/SOC-EDR-Detection-Lab/tree/main/Phishing-Lab" target="_blank" class="btn-sm-outline">View GitHub Code</a>
+              <a href="Phishing-Lab/README.md" target="_blank" class="btn-sm-outline">Read Documentation</a>
+            </div>
+          </div>
+          <div class="project-visual">
+            <img src="Phishing-Lab/phishing_soc_dashboard.png" alt="Phishing SOC Incident Dashboard">
+          </div>
+        </div>
+
+        <!-- PROJECT 3: SPLUNK LAB -->
+        <div class="project-card">
+          <div class="project-content">
+            <div>
+              <div class="project-badge-row">
+                <span class="pill pill-blue">Splunk Enterprise</span>
+                <span class="pill pill-red">Critical Severity</span>
+                <span class="pill pill-orange">MITRE T1110 / T1098</span>
+                <span class="pill pill-green">Threat Hunting (SPL)</span>
+              </div>
+              <h3 class="project-title">SIEM Threat Hunting, Detection Engineering &amp; Alerting Lab</h3>
+              <p class="project-summary">
+                Investigated an active multi-stage domain compromise on an enterprise Domain Controller (<code>DC-CORP-01</code>). Ingested Windows Security Event logs and Sysmon telemetry to trace brute-force access, encoded reverse shells, rogue Domain Admin creation, and log wiping.
+              </p>
+              <ul class="project-bullets">
+                <li>Correlated Event 4625 brute-force spikes with Event 4624 breached network logons from external adversary IP.</li>
+                <li>Detected obfuscated Base64 PowerShell reverse shells and LOLBAS payload ingress via <code>certutil.exe</code>.</li>
+                <li>Authored production Splunk SPL correlation queries and alerting rules in <code>savedsearches.conf</code>.</li>
+                <li>Engineered native Splunk XML dashboard and formulated dual KRBTGT Kerberos Golden Ticket mitigation playbooks.</li>
+              </ul>
+            </div>
+            <div class="project-actions">
+              <a href="Splunk-Threat-Hunting-Lab/splunk_soc_dashboard.html" target="_blank" class="btn-sm-primary">Launch Live Splunk Console &rarr;</a>
+              <a href="https://github.com/osagie-idehen/SOC-EDR-Detection-Lab/tree/main/Splunk-Threat-Hunting-Lab" target="_blank" class="btn-sm-outline">View GitHub Code</a>
+              <a href="Splunk-Threat-Hunting-Lab/README.md" target="_blank" class="btn-sm-outline">Read Documentation</a>
+            </div>
+          </div>
+          <div class="project-visual">
+            <img src="Splunk-Threat-Hunting-Lab/splunk_soc_dashboard.png" alt="Splunk Enterprise SOC Threat Hunting Console">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CORE SKILLS SECTION -->
+  <section id="skills">
+    <div class="container">
+      <span class="section-tag">Technical Toolkit</span>
+      <h2 class="section-title">Core Cybersecurity Competencies</h2>
+      <p class="section-desc">
+        Hands-on technical capabilities aligned with modern 24/7 Security Operations Centers, Blue Team incident response, and threat detection.
+      </p>
+
+      <div class="skills-container">
+        <div class="skill-box">
+          <div class="skill-icon">&#128737;&#65039;</div>
+          <div class="skill-name">SIEM &amp; EDR Engineering</div>
+          <div class="skill-items">LimaCharlie Cloud EDR, Splunk Enterprise (SPL Queries &amp; Dashboards), Microsoft Sysmon (SwiftOnSecurity kernel logging), Security Onion, Log Correlation.</div>
+        </div>
+
+        <div class="skill-box">
+          <div class="skill-icon">&#128269;</div>
+          <div class="skill-name">Threat Hunting &amp; Frameworks</div>
+          <div class="skill-items">MITRE ATT&amp;CK Matrix mapping, NIST SP 800-61 Rev. 2 Incident Life Cycle, Cyber Kill Chain, IoC extraction &amp; defanging, Living-off-the-Land (LOLBAS) detection.</div>
+        </div>
+
+        <div class="skill-box">
+          <div class="skill-icon">&#9993;&#65039;</div>
+          <div class="skill-name">Email Security &amp; Triage</div>
+          <div class="skill-items">RFC 822 MIME header forensics, SPF/DKIM/DMARC policy enforcement, YARA detection engineering, Microsoft 365 Compliance PowerShell Search &amp; Purge.</div>
+        </div>
+
+        <div class="skill-box">
+          <div class="skill-icon">&#128273;</div>
+          <div class="skill-name">Cloud &amp; Identity Defense</div>
+          <div class="skill-items">Microsoft Entra ID (Azure AD), Role-Based Access Control (RBAC), Multi-Factor Authentication (MFA), Conditional Access Policies, AWS Cloud Practitioner fundamentals.</div>
+        </div>
+
+        <div class="skill-box">
+          <div class="skill-icon">&#128421;&#65039;</div>
+          <div class="skill-name">Network &amp; Vulnerability Tools</div>
+          <div class="skill-items">Wireshark packet analysis, Nmap network scanning, Qualys Vulnerability Management, TCP/IP, DNS, VLAN segmentation, NAC access models.</div>
+        </div>
+
+        <div class="skill-box">
+          <div class="skill-icon">&#128187;</div>
+          <div class="skill-name">Scripting &amp; Automation</div>
+          <div class="skill-items">PowerShell scripting (triage automation, header parsing, registry &amp; event log extraction), Bash scripting, Windows Server, Linux (Ubuntu, Kali).</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE & EDUCATION -->
+  <section id="experience">
+    <div class="container">
+      <span class="section-tag">Career Background</span>
+      <h2 class="section-title">Certifications &amp; Professional Experience</h2>
+      <p class="section-desc">
+        Proven 11-year track record managing IT systems infrastructure and transitioning directly into Tier 1/2 SOC operations.
+      </p>
+
+      <div class="resume-grid">
+        <!-- CERTS & EDU -->
+        <div class="resume-card">
+          <h3>Certifications &amp; Credentials</h3>
+          <div class="timeline-item">
+            <div class="timeline-title">CompTIA Security+ (ce)</div>
+            <div class="timeline-sub">CompTIA &bull; Valid through 2028</div>
+            <div class="timeline-desc">Credential ID: Active &bull; Deep validation of threats, attacks, vulnerabilities, architecture, and security operations.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-title">AWS Certified Cloud Practitioner</div>
+            <div class="timeline-sub">Amazon Web Services &bull; Valid through Oct 2028</div>
+            <div class="timeline-desc">Cloud infrastructure security, shared responsibility model, IAM, VPC network security.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-title">Certified in Cybersecurity (CC)</div>
+            <div class="timeline-sub">Institute of Chartered IT Professionals (ICITP), 2025</div>
+            <div class="timeline-desc">Access control models, security operations, incident response, network security.</div>
+          </div>
+
+          <h3 style="margin-top: 24px;">Education</h3>
+          <div class="timeline-item">
+            <div class="timeline-title">B.Sc. in Information Technology</div>
+            <div class="timeline-sub">National Open University of Nigeria (NOUN) &bull; 2013 &ndash; 2018</div>
+            <div class="timeline-desc">Specialized in systems engineering, computer networking, database management, and information security.</div>
+          </div>
+        </div>
+
+        <!-- WORK EXPERIENCE -->
+        <div class="resume-card">
+          <h3>Professional Experience</h3>
+          <div class="timeline-item">
+            <div class="timeline-title">Security Operations Center (SOC) Analyst</div>
+            <div class="timeline-sub">Mapelead Limited &bull; Dec 2024 &ndash; Present</div>
+            <div class="timeline-desc">Monitor 24/7 security event queues, eliminate false positives, execute Qualys vulnerability assessments, and escalate true positives with forensic artifacts.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-title">IT Analyst &amp; Systems Lead</div>
+            <div class="timeline-sub">Ford Mart Legacy Mart &bull; Mar 2022 &ndash; Nov 2024</div>
+            <div class="timeline-desc">Managed 99.8% system availability, oversaw zero-loss data migrations, delivered corporate phishing awareness training for 40+ staff, authored SOPs.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-title">Information Technology Specialist</div>
+            <div class="timeline-sub">BINCOM IT &bull; Jan 2018 &ndash; Dec 2021</div>
+            <div class="timeline-desc">Maintained enterprise hardware, network switches, routers, and resolved Tier 2 technical incidents within strict corporate SLAs.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-links">
+        <a href="mailto:henryosagieidehen@gmail.com">henryosagieidehen@gmail.com</a>
+        <span>&bull;</span>
+        <a href="tel:+2349127695096">+234 912 769 5096</a>
+        <span>&bull;</span>
+        <a href="https://www.linkedin.com/in/henryosagieidehen" target="_blank">LinkedIn</a>
+        <span>&bull;</span>
+        <a href="https://github.com/osagie-idehen/SOC-EDR-Detection-Lab" target="_blank">GitHub</a>
+        <span>&bull;</span>
+        <a href="Osagie_Idehen_Cybersecurity_Resume.pdf" target="_blank">Download Resume (PDF)</a>
+      </div>
+      <p class="footer-copy">
+        &copy; 2026 Osagie Henry Idehen. Designed for Enterprise SOC &amp; Detection Engineering Roles. Hosted on GitHub Pages.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
